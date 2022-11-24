@@ -4,13 +4,14 @@
         $user_name = $_POST['user_name'];
         $desc = $_POST['desc'];
         $price = $_POST['price'];
-        if($user_name == '' || $desc == '' || $price == '') {
+        $categoryId = $_POST['categoryId'];
+        if($user_name == '' || $desc == '' || $price == '' || $categoryId == '') {
             echo 'Vui lòng nhập đủ thông tin';
         }
-        if($user_name != '' && $desc != '' && $price != '') {
-            $query = "INSERT INTO `products`(`productName`, `productDesc`,`productPrice`) VALUES (:user_name, :desc, :price)";
+        if($user_name != '' && $desc != '' && $price != '' || $categoryId == '') {
+            $query = "INSERT INTO `products`(`productName`, `productDesc`,`productPrice`,`categoryId`) VALUES (:user_name, :desc, :price, :categoryId)";
             $stmt = $connection->prepare($query);
-            $stmt -> execute(array(":user_name"=>$user_name, ":desc"=>$desc, ":price"=>$price));
+            $stmt -> execute(array(":user_name"=>$user_name, ":desc"=>$desc, ":price"=>$price, ":categoryId"=>$categoryId));
             header("location: ./index.php");
         }
     }
@@ -45,6 +46,10 @@
             <div class="form-group">
                 <label for="price">Price</label>
                 <input type="number" name="price" class="form-control" placeholder="Price">
+            </div>
+            <div class="form-group">
+                <label for="categoryId">categoryId</label>
+                <input type="number" name="categoryId" class="form-control" placeholder="categoryId">
             </div>
             <button type="submit" name="more_pro" class="btn btn-primary">Submit</button>
         </form>
